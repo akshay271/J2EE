@@ -1,0 +1,15 @@
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Employee details&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;center&gt;
+&lt;h1&gt;SEARCH EMPLOYEE&lt;/h1&gt;
+&lt;form action=&quot;search&quot; method=&quot;get&quot;&gt;
+Employee id: &lt;input type=&quot;text&quot; name=&quot;id&quot;&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;input type=&quot;submit&quot; value=&quot;SEARCH&quot;&gt;
+&lt;/form&gt;
+&lt;/center&gt;
+&lt;/body&gt;
+&lt;/html&gt;
