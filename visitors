@@ -1,0 +1,33 @@
+import javax.servlet.http.HttpServletResponse;
+public class cookieclass extends HttpServlet {
+String name;
+public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+PrintWriter out=res.getWriter();
+name=req.getParameter(&quot;txt&quot;);
+String cut=&quot;1&quot;;
+int chk=0;
+String nwcount=&quot;&quot;;
+Cookie cw = new Cookie(name,cut);
+cw.setMaxAge(24);
+res.addCookie(cw);
+Cookie [] StoreCookies = req.getCookies();
+int i,count;
+if(StoreCookies!= null)
+{
+for(i=0;i&lt;StoreCookies.length;i++)
+{
+String cname= StoreCookies[i].getName();
+String coccur = StoreCookies[i].getValue();
+if(name.equals(cname))
+{
+count = Integer.parseInt(coccur);
+count = count + 1;
+
+nwcount = Integer.toString(count);
+Cookie cc = new Cookie(name,nwcount);
+cc.setMaxAge(24);
+res.addCookie(cc);
+chk=1;
+}
+}
+}
