@@ -1,0 +1,37 @@
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+public class login extends HttpServlet {
+protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+
+String s1=req.getParameter(&quot;uname&quot;);
+String s2=req.getParameter(&quot;pass&quot;);
+PrintWriter out= res.getWriter();
+int f=0;
+try
+{
+Class.forName(&quot;com.mysql.jdbc.Driver&quot;);
+Connection con =
+DriverManager.getConnection(&quot;jdbc:mysql://localhost/j2eelab&quot;,&quot;root&quot;,&quot;&quot;);
+Statement s= con.createStatement();
+ResultSet rs = s.executeQuery(&quot;select * from login&quot;);
+while(rs.next())
+{
+if(s1.equalsIgnoreCase(rs.getString(1)) &amp;&amp;
+
+s2.equalsIgnoreCase(rs.getString(2)))
+{
+f=1;
+}
+}
+if(f==1)
+out.println(&quot;&lt;center&gt;&lt;h1&gt;Login Successfull!!!&lt;/h1&gt;&lt;/center&gt;&quot;);
+else
+{
+out.println(&quot;&lt;center&gt;&lt;h1&gt;Invalid username or password&lt;/h1&gt;&lt;/center&gt;&quot;);
+}
+}
+catch(Exception e)
+{
+out.println(&quot;error&quot;+e);
+}
+}}

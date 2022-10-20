@@ -1,0 +1,78 @@
+&lt;html&gt;
+&lt;body&gt;
+&lt;form action=&quot;Bank.jsp&quot; method=&quot;post&quot;&gt;
+&lt;h1&gt;Customer Login&lt;/h1&gt;&lt;br&gt;
+&lt;table border=&quot;1&quot;&gt;
+&lt;tr&gt;&lt;td&gt;Name:&lt;/td&gt;
+&lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;cust_name&quot;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;AccNumber:&lt;/td&gt;
+&lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;acc_no&quot;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Password:&lt;/td&gt;
+&lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;pass&quot;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Amount:&lt;/td&gt;
+&lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;amount&quot;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;trans&quot; value=&quot;deposit&quot;&gt;Deposit&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;input type=&quot;radio&quot; name=&quot;trans&quot; value=&quot;withdraw&quot;&gt;Withdraw&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;input type=&quot;Submit&quot; value=&quot;DONE&quot;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+&lt;html&gt;
+&lt;body&gt;
+&lt;%@ page import=&quot;java.sql.*&quot; %&gt;
+&lt;% String accno = request.getParameter(&quot;acc_no&quot;);
+String pass=request.getParameter(&quot;pass&quot;);
+Class.forName(&quot;com.mysql.jdbc.Driver&quot;);
+Connection conn=DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/j2eelab&quot;,&quot;root&quot;,&quot;&quot;);
+Statement stmt = conn.createStatement();
+ResultSet rs = stmt.executeQuery(&quot;Select * from bank where accountno=&#39;&quot;+accno+&quot;&#39;&quot;);
+if(rs.next())
+{
+if(pass.equals(rs.getString(&quot;password&quot;)))
+{
+int amt=Integer.parseInt(request.getParameter(&quot;amount&quot;));
+String tr=request.getParameter(&quot;trans&quot;);
+if(tr.equals(&quot;deposit&quot;))
+{
+int dbal= Integer.parseInt(rs.getString(&quot;balance&quot;));
+dbal=dbal+amt;
+stmt.executeUpdate(&quot;update bank set balance=&#39;&quot;+dbal+&quot;&#39; where
+
+accountno=&#39;&quot;+accno+&quot;&#39;&quot;);
+
+out.println(&quot;Amount Deposited&quot;);
+}
+if(tr.equals(&quot;withdraw&quot;))
+{
+int bal=Integer.parseInt(rs.getString(&quot;balance&quot;));
+if (amt&lt;(bal-1000))
+{
+
+int dbal=Integer.parseInt(rs.getString(&quot;balance&quot;));
+dbal = dbal-amt;
+stmt.executeUpdate(&quot;update bank set
+
+balance=&#39;&quot;+dbal+&quot;&#39;where accountno=&#39;&quot;+accno+&quot;&#39;&quot;);
+
+out.println(&quot;Amount Withdrawn successfully&quot;);
+out.println(&quot;available balance is=&quot;+dbal);
+}
+else{
+
+out.println(&quot;withdraw not possible! Minimum balance should
+
+be 1000!&quot;);
+}
+
+}
+}
+else{
+
+out.println(&quot;password not match&quot;);
+}
+
+}
+%&gt;
+&lt;/body&gt;
+&lt;/html&gt;
