@@ -13,3 +13,40 @@ Employee id: &lt;input type=&quot;text&quot; name=&quot;id&quot;&gt;
 &lt;/center&gt;
 &lt;/body&gt;
 &lt;/html&gt;
+import javax.servlet.http.HttpServletResponse;
+public class search extends HttpServlet {
+
+protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException,
+
+IOException {
+
+PrintWriter out=res.getWriter();
+int id=Integer.parseInt(req.getParameter(&quot;id&quot;));
+try
+{
+Class.forName(&quot;com.mysql.jdbc.Driver&quot;);
+Connection
+
+con=DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/j2eelab&quot;,&quot;root&quot;,&quot;&quot;);
+
+Statement s=con.createStatement();
+ResultSet x = s.executeQuery(&quot;select * from employee where id=&#39;&quot;+id+&quot;&#39;&quot;);
+if(x.next())
+{
+out.println(&quot;&lt;center&gt;&quot;);
+out.println(&quot;&lt;br&gt; Name :&quot;+x.getString(2));
+out.println(&quot;&lt;br&gt; Designation :&quot;+x.getString(3));
+out.println(&quot;&lt;br&gt; Salary :&quot;+x.getString(4));
+out.println(&quot;&lt;br&gt; DOB :&quot;+x.getString(5));
+out.println(&quot;&lt;br&gt; Date of joining :&quot;+x.getString(6));
+out.println(&quot;&lt;/center&gt;&quot;);
+
+}
+else
+{
+out.println(&quot;No record found&quot;);
+}
+}
+catch(Exception e)
+{
+out.println(&quot;error=&quot;+e);
