@@ -39,3 +39,8 @@ response.sendRedirect(&quot;Index.jsp&quot;);
 %&gt;
 &lt;/body&gt;
 &lt;/html&gt;
+
+
+String name1=request.getParameter(&quot;stdname&quot;);
+Class.forName(&quot;com.mysql.jdbc.Driver&quot;);
+Connection con=DriverManager.getConnection(&quot;jdbc:mysql://localhost:3306/j2eelab&quot;,&quot;root&quot;,&quot;&quot;);
