@@ -16,6 +16,15 @@ Employee id: &lt;input type=&quot;text&quot; name=&quot;id&quot;&gt;
 import javax.servlet.http.HttpServletResponse;
 public class search extends HttpServlet {
 
+protected void doPost(HttpServletRequest req1, HttpServletResponse res1) throws ServletException,
+
+IOException {
+
+PrintWriter out=res.getWriter();
+int id=Integer.parseInt(req.getParameter(&quot;id&quot;));
+float id1=Integer.parseInt(req.getParameter(&quot;id&quot;));
+try
+
 protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException,
 
 IOException {
